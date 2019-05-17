@@ -1,0 +1,4 @@
+suites:
+  acme_suite:
+    namespace: Monster\Finance
+    psr4_prefix: Monster\Finance

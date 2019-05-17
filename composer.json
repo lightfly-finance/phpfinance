@@ -1,0 +1,26 @@
+{
+    "name": "weinan/finance",
+    "require": {
+        "guzzlehttp/guzzle": "^6.3",
+        "ext-json": "*",
+        "nikic/iter": "^1.6"
+    },
+    "require-dev": {
+        "phpspec/phpspec": "^5.1"
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "autoload": {
+        "psr-4": {
+            "Monster\\Finance\\": "src/"
+        }
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "twn39",
+            "email": "twn39@163.com"
+        }
+    ]
+}
