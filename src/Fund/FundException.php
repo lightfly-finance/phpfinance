@@ -9,6 +9,4 @@ use Exception;
 class FundException extends Exception
 {
 
-
-
 }

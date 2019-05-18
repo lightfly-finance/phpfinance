@@ -1,6 +1,4 @@
 <?php
-
-
 namespace Monster\Finance\Fund;
 
 
