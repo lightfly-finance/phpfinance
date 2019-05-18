@@ -16,6 +16,9 @@
             "Monster\\Finance\\": "src/"
         }
     },
+    "scripts": {
+        "test": "phpspec run"
+    },
     "license": "MIT",
     "authors": [
         {

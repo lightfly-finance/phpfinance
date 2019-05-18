@@ -4,4 +4,4 @@ php:
   - '7.2'
   - '7.3'
   - nightly
-script: vendor/bin/phpspec run
+script: composer test
