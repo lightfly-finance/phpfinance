@@ -32,12 +32,12 @@ class Stock
 
     /**
      * 数据源： http://quotes.money.163.com/trade/lsjysj_600004.html?year=2019&season=1
-     * @param $symbol
+     * @param $symbol string 无前缀sh or sz
      * @param $dateFrom
      * @param $dateTo
      * @return array
      */
-    public function dailyHistory($symbol, $dateFrom, $dateTo)
+    public function dailyHistory(string $symbol, string $dateFrom, string $dateTo): array
     {
         $queryString = http_build_query([
             'code' => "0$symbol",
@@ -56,7 +56,7 @@ class Stock
      * @param $url
      * @return \Generator
      */
-    private function dailyKData($url)
+    private function dailyKData(string $url)
     {
         $res = $this->httpClient->get($url);
 
@@ -80,7 +80,7 @@ class Stock
      * @param $type
      * @return array
      */
-    public function history($symbol, $type)
+    public function history(string $symbol, $type): array
     {
         $res = $this->httpClient->get(self::$STOCK_HISTORY_API."/$symbol/$type.js");
 
@@ -107,7 +107,7 @@ class Stock
      *
      * @return array
      */
-    public function HS300()
+    public function HS300(): array
     {
         return toArray($this->getHS300Page());
     }

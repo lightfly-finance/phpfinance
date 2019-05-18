@@ -18,7 +18,7 @@ trait StockIndexTrait
      *
      * @return array
      */
-    public function stockIndex()
+    public function stockIndex(): array
     {
         $res = $this->httpClient->get(self::$STOCK_INDEX_API);
         $res = mb_convert_encoding($res, 'UTF-8', 'GBK');
