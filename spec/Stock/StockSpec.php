@@ -116,4 +116,9 @@ class StockSpec extends ObjectBehavior
     {
         $this->suggest("格力")->shouldBeArray();
     }
+
+    public function it_fetch_realtime_stock()
+    {
+        $this->realTimeStock(['sz002142', 'sh601001', 'sh601003'])->shouldBeArray();
+    }
 }

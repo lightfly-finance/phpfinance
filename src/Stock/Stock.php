@@ -22,7 +22,9 @@ class Stock
 
     static $DAILY_HISTORY_API = 'http://quotes.money.163.com/service/chddata.html';
 
-    static $SUGGEST_URL = 'http://suggest3.sinajs.cn/suggest/';
+    static $SUGGEST_API = 'http://suggest3.sinajs.cn/suggest/';
+
+    static $REALTIME_API = 'http://hq.sinajs.cn/list';
 
     /**
      * Stock constructor.
@@ -187,7 +189,7 @@ class Stock
      */
     public function suggest($keyword)
     {
-        $url = self::$SUGGEST_URL.'key='.$keyword;
+        $url = self::$SUGGEST_API.'key='.$keyword;
 
         $res = $this->httpClient->get($url);
         $res = mb_convert_encoding($res, 'UTF-8', 'GBK');
@@ -200,5 +202,60 @@ class Stock
         return toArray(map(function ($item) {
             return explode(',', $item);
         }, $data));
+    }
+
+    /**
+     * 最新行情
+     * @param array $symbols
+     * @return array
+     */
+    public function realTimeStock(array $symbols)
+    {
+        $symbolStr = implode(',', $symbols);
+
+        $url = self::$REALTIME_API.'='.$symbolStr;
+
+        $res = $this->httpClient->get($url);
+        $res = mb_convert_encoding($res, 'UTF-8', 'GBK');
+
+        $pattern = '/hq_str_(s[z|h][0-9]{6})="(.+)";/';
+        preg_match_all($pattern, $res, $matches);
+
+        $data = [];
+        $length = count($symbols);
+        $header = [
+            '代码', '名称', '今开', '昨收', '当前价格', '最高', '最低', '成交量', '成交额',
+            '买一申请', '买一报价', '买二申请', '买二报价', '买三申请', '买三报价',
+            '买四申请', '买四报价', '买五申请', '买五报价', '卖一申请', '卖一报价',
+            '卖二申请', '卖二报价', '卖三申请', '卖三报价', '卖四申请', '卖四报价', '卖五申请',
+            '卖五报价', '日期',
+        ];
+        $data[] = $header;
+
+        for($i = 0; $i < $length; $i++) {
+
+            $item = explode(',', $matches[2][$i]);
+
+            $data[] = [
+                $matches[1][$i],
+                $item[0], $item[1],
+                $item[2], $item[3],
+                $item[4], $item[5],
+                $item[8], $item[9],
+                $item[10], $item[11],  // 买一
+                $item[12], $item[13],  // 买二
+                $item[14], $item[15],
+                $item[16], $item[17],
+                $item[18], $item[19],
+                $item[20], $item[21], // 卖一
+                $item[22], $item[23], // 卖二
+                $item[24], $item[25],
+                $item[26], $item[27],
+                $item[28], $item[29], // 卖五
+                $item[30].' '.$item[31] // 日期
+            ];
+        }
+
+        return $data;
     }
 }
