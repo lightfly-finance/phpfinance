@@ -66,4 +66,29 @@ class StockSpec extends ObjectBehavior
     {
         $this->SHIndexComponentStocksIter()->shouldHaveType(\Generator::class);
     }
+
+    public function it_fetch_sh50_index_component_stocks()
+    {
+        $this->SH50IndexComponentStocks()->shouldBeArray();
+    }
+
+    public function it_fetch_sh_consumption_index_component_stocks()
+    {
+        $this->SHConsumptionIndexComponentStocks()->shouldBeArray();
+    }
+
+    public function it_fetch_sh_medicine_index_component_stocks()
+    {
+        $this->SHMedicineIndexComponentStocks()->shouldBeArray();
+    }
+
+    public function it_fetch_sz_composite_index_component_stocks()
+    {
+        $this->SZCompositeIndexComponentStocks()->shouldBeArray();
+    }
+
+    public function it_return_sz_composite_index_component_stocks_iter()
+    {
+        $this->SZCompositeIndexComponentStocksIter()->shouldHaveType(\Generator::class);
+    }
 }

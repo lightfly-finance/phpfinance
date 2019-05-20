@@ -71,7 +71,8 @@ trait StockIndexTrait
      */
     public function SHIndexComponentStocks()
     {
-        return toArray($this->getSHIndexComponentStocksPage());
+        $symbol = '000001';
+        return toArray($this->getComponentStocksPage($symbol));
     }
 
     /**
@@ -80,14 +81,62 @@ trait StockIndexTrait
      */
     public function SHIndexComponentStocksIter()
     {
-        return $this->getSHIndexComponentStocksPage();
+        $symbol = '000001';
+        return $this->getComponentStocksPage($symbol);
+    }
+
+    /**
+     * 上证50指数成分股
+     */
+    public function SH50IndexComponentStocks()
+    {
+        $symbol = '000016';
+        return toArray($this->getComponentStocksPage($symbol));
+    }
+
+    /**
+     * 上证消费指数成分股
+     */
+    public function SHConsumptionIndexComponentStocks()
+    {
+        $symbol = '000036';
+        return toArray($this->getComponentStocksPage($symbol));
+    }
+
+    /**
+     * 上证医药指数成分股
+     */
+    public function SHMedicineIndexComponentStocks()
+    {
+        $symbol = '000037';
+        return toArray($this->getComponentStocksPage($symbol));
+    }
+
+    /**
+     * 深证综指成分股
+     * @return array
+     */
+    public function SZCompositeIndexComponentStocks()
+    {
+        $symbol = '399106';
+        return toArray($this->getComponentStocksPage($symbol));
+    }
+
+    /**
+     * 返回迭代器
+     * @return Generator
+     */
+    public function SZCompositeIndexComponentStocksIter()
+    {
+        $symbol = '399106';
+        return $this->getComponentStocksPage($symbol);
     }
 
     /**
      * 上证指数成分股分页数据
      * @return Generator
      */
-    private function getSHIndexComponentStocksPage()
+    private function getComponentStocksPage($symbol)
     {
         $page = 1;
         $num = 80;
@@ -98,7 +147,7 @@ trait StockIndexTrait
                 'num' => $num,
                 'sort' => 'symbol',
                 'asc' => 1,
-                'node' => 'zhishu_000001',
+                'node' => 'zhishu_'.$symbol,
             ]);
 
             $url = self::$SH_INDEX_COMPONENT_STOCKS.'?'.$queryString;

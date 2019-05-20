@@ -2,6 +2,7 @@
 namespace Monster\Finance\Stock;
 
 
+use Generator;
 use function iter\map;
 use function iter\toArray;
 use Monster\Finance\HttpClientInterface;
@@ -54,7 +55,7 @@ class Stock
      * 每日历史数据
      *
      * @param $url
-     * @return \Generator
+     * @return Generator
      */
     private function dailyKData(string $url)
     {
@@ -115,7 +116,7 @@ class Stock
     /**
      * 获取沪深300分页数据
      *
-     * @return \Generator
+     * @return Generator
      */
     public function getHS300Page()
     {
@@ -125,7 +126,7 @@ class Stock
 
             $data = mb_convert_encoding($res, 'UTF-8', 'GB2312'); // 非json格式，为js对象格式，键名无引号
 
-            if ($data === 'null') {
+            if ($data === 'null' || empty($data)) {
                 break;
             }
 
