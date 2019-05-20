@@ -53,7 +53,7 @@ class StockSpec extends ObjectBehavior
 
     public function it_fetch_stock_daily_history()
     {
-        $this->dailyHistory('600365', '2019-05-01', '2019-05-17')
+        $this->dailyHistory('sz002142', '2019-05-01', '2019-05-17')
             ->shouldBeArray();
     }
 
