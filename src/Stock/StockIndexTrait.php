@@ -113,6 +113,23 @@ trait StockIndexTrait
     }
 
     /**
+     * 深证成指成分股
+     */
+    public function SZIndexComponentStocks()
+    {
+        $symbol = '399001';
+        return toArray($this->getComponentStocksPage($symbol));
+    }
+
+    /**
+     * @return Generator
+     */
+    public function SZIndexComponentStocksIter()
+    {
+        $symbol = '399001';
+        return $this->getComponentStocksPage($symbol);
+    }
+    /**
      * 深证综指成分股
      * @return array
      */
@@ -129,6 +146,24 @@ trait StockIndexTrait
     public function SZCompositeIndexComponentStocksIter()
     {
         $symbol = '399106';
+        return $this->getComponentStocksPage($symbol);
+    }
+
+    /**
+     * 中证500指数成分股
+     */
+    public function ZZ500IndexComponentStocks()
+    {
+        $symbol = '000905';
+        return toArray($this->getComponentStocksPage($symbol));
+    }
+
+    /**
+     * @return Generator
+     */
+    public function ZZ500IndexComponentStocksIter()
+    {
+        $symbol = '000905';
         return $this->getComponentStocksPage($symbol);
     }
 

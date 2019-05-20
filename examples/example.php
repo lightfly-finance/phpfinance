@@ -10,7 +10,7 @@ $httpClient = new HttpClient();
 
 
 $stock = new Stock($httpClient);
-$data = $stock->SZCompositeIndexComponentStocks();
+$data = $stock->SZIndexComponentStocks();
 
 var_dump($data);
 

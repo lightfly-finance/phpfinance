@@ -91,4 +91,24 @@ class StockSpec extends ObjectBehavior
     {
         $this->SZCompositeIndexComponentStocksIter()->shouldHaveType(\Generator::class);
     }
+
+    public function it_fetch_zz500_index_component_stocks()
+    {
+        $this->ZZ500IndexComponentStocks()->shouldBeArray();
+    }
+
+    public function it_return_zz500_index_component_stocks_iter()
+    {
+        $this->ZZ500IndexComponentStocksIter()->shouldHaveType(\Generator::class);
+    }
+
+    public function it_fetch_sz_index_component_stocks()
+    {
+        $this->SZIndexComponentStocks()->shouldBeArray();
+    }
+
+    public function it_return_sz_index_component_stocks_iter()
+    {
+        $this->SZIndexComponentStocksIter()->shouldHaveType(\Generator::class);
+    }
 }
