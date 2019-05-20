@@ -21,7 +21,7 @@ trait StockIndexTrait
     static $SH_INDEX_COMPONENT_STOCKS = "http://vip.stock.finance.sina.com.cn/quotes_service/api/json_v2.php/Market_Center.getHQNodeDataSimple";
 
     /**
-     * 指数数据
+     * 大盘指数数据
      * 数据源：http://vip.stock.finance.sina.com.cn/mkt/#dpzs
      *
      * @return array
@@ -169,6 +169,7 @@ trait StockIndexTrait
 
     /**
      * 上证指数成分股分页数据
+     * @param $symbol
      * @return Generator
      */
     private function getComponentStocksPage($symbol)

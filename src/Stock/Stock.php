@@ -22,6 +22,8 @@ class Stock
 
     static $DAILY_HISTORY_API = 'http://quotes.money.163.com/service/chddata.html';
 
+    static $SUGGEST_URL = 'http://suggest3.sinajs.cn/suggest/';
+
     /**
      * Stock constructor.
      * @param HttpClientInterface $httpClient
@@ -33,15 +35,26 @@ class Stock
 
     /**
      * 数据源： http://quotes.money.163.com/trade/lsjysj_600004.html?year=2019&season=1
-     * @param $symbol string 无前缀sh or sz
+     * @param $symbol string 需要前缀sh or sz
      * @param $dateFrom
      * @param $dateTo
      * @return array
+     * @throws StockException
      */
     public function dailyHistory(string $symbol, string $dateFrom, string $dateTo): array
     {
+        $prefix = substr($symbol, 0, 2);
+
+        // 代码为股票代码，上海股票前加0，如600756变成0600756，深圳股票前加1
+        if ('sh' === strtolower($prefix)) {
+            $prefixSymbol = '0'.substr($symbol, 2, strlen($symbol) - 2);
+        } elseif ('sz' === strtolower($prefix)) {
+            $prefixSymbol = '1'.substr($symbol, 2, strlen($symbol) - 2);
+        } else {
+            throw new StockException('symbol format invalid');
+        }
         $queryString = http_build_query([
-            'code' => "0$symbol",
+            'code' => $prefixSymbol,
             'start' => date('Ymd', strtotime($dateFrom)),
             'end' => date('Ymd', strtotime($dateTo)),
         ]);
@@ -164,5 +177,28 @@ class Stock
 
             $page += 1;
         }
+    }
+
+    /**
+     * 关键字搜索对应股票或者其他名称
+     *
+     * @param $keyword
+     * @return array
+     */
+    public function suggest($keyword)
+    {
+        $url = self::$SUGGEST_URL.'key='.$keyword;
+
+        $res = $this->httpClient->get($url);
+        $res = mb_convert_encoding($res, 'UTF-8', 'GBK');
+
+        $pattern = '/="(.+)"/';
+
+        preg_match($pattern, $res, $matches);
+        $data = explode(';', $matches[1]);
+
+        return toArray(map(function ($item) {
+            return explode(',', $item);
+        }, $data));
     }
 }

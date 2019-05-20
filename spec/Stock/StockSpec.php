@@ -111,4 +111,9 @@ class StockSpec extends ObjectBehavior
     {
         $this->SZIndexComponentStocksIter()->shouldHaveType(\Generator::class);
     }
+
+    public function it_get_stock_suggest()
+    {
+        $this->suggest("格力")->shouldBeArray();
+    }
 }
