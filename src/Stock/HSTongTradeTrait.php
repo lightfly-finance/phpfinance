@@ -3,6 +3,11 @@
 namespace Monster\Finance\Stock;
 
 
+/**
+ * 沪深港股通数据
+ * Trait HSTongTradeTrait
+ * @package Monster\Finance\Stock
+ */
 trait HSTongTradeTrait
 {
     static $BASE_URL = 'http://quotes.sina.cn/hq/api/openapi.php';

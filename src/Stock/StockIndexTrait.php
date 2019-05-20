@@ -2,15 +2,23 @@
 
 namespace Monster\Finance\Stock;
 
+use Generator;
 use function iter\filter;
 use function iter\map;
 use function iter\toArray;
 
+
+/**
+ * 指数数据
+ * Trait StockIndexTrait
+ * @package Monster\Finance\Stock
+ */
 trait StockIndexTrait
 {
 
     static $STOCK_INDEX_API = 'http://hq.sinajs.cn/rn=mtnop&list=sh000001,sh000002,sh000003,sh000008,sh000009,sh000010,sh000011,sh000012,sh000016,sh000017,sh000300,sz399001,sz399002,sz399003,sz399004,sz399005,sz399006,sz399100,sz399101,sz399106,sz399107,sz399108,sz399333,sz399606';
 
+    static $SH_INDEX_COMPONENT_STOCKS = "http://vip.stock.finance.sina.com.cn/quotes_service/api/json_v2.php/Market_Center.getHQNodeDataSimple";
 
     /**
      * 指数数据
@@ -54,6 +62,74 @@ trait StockIndexTrait
                 '成交额' => $item['list'][9],  // 单位: 万
             ];
         }, $result));
+
+    }
+
+    /**
+     * 上证指数成分股
+     * 数据源： http://vip.stock.finance.sina.com.cn/mkt/#zhishu_000001
+     */
+    public function SHIndexComponentStocks()
+    {
+        return toArray($this->getSHIndexComponentStocksPage());
+    }
+
+    /**
+     * 返回迭代器
+     * @return Generator
+     */
+    public function SHIndexComponentStocksIter()
+    {
+        return $this->getSHIndexComponentStocksPage();
+    }
+
+    /**
+     * 上证指数成分股分页数据
+     * @return Generator
+     */
+    private function getSHIndexComponentStocksPage()
+    {
+        $page = 1;
+        $num = 80;
+
+        while (true) {
+            $queryString = http_build_query([
+                'page' => $page,
+                'num' => $num,
+                'sort' => 'symbol',
+                'asc' => 1,
+                'node' => 'zhishu_000001',
+            ]);
+
+            $url = self::$SH_INDEX_COMPONENT_STOCKS.'?'.$queryString;
+
+            $res = $this->httpClient->get($url);
+
+            $res = mb_convert_encoding($res, 'UTF-8', 'GBK');
+
+            if ($res === 'null' || empty($res)) {
+                break;
+            }
+
+            $pattern = '/\{([^{}]+)\}/';
+
+            preg_match_all($pattern, $res, $matches);
+
+            foreach ($matches[1] as $company) {
+                $params = explode(',', $company);
+
+                $tmp = [];
+                foreach ($params as $param) {
+                    $pattern = '/^([a-z]+):(.+)/';
+                    preg_match($pattern, $param, $result);
+                    $tmp[$result[1]] = trim($result[2], '"');
+                }
+
+                yield $tmp;
+            }
+
+            $page += 1;
+        }
 
     }
 }

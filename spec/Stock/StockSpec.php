@@ -56,4 +56,14 @@ class StockSpec extends ObjectBehavior
         $this->dailyHistory('600365', '2019-05-01', '2019-05-17')
             ->shouldBeArray();
     }
+
+    public function it_fetch_sh_index_component_stocks()
+    {
+        $this->SHIndexComponentStocks()->shouldBeArray();
+    }
+
+    public function it_return_sh_index_component_stocks_iter()
+    {
+        $this->SHIndexComponentStocksIter()->shouldHaveType(\Generator::class);
+    }
 }

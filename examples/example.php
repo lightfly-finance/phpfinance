@@ -10,7 +10,7 @@ $httpClient = new HttpClient();
 
 
 $stock = new Stock($httpClient);
-$data = $stock->dailyHistory('600365', '2019-01-01', '2019-05-17');
+$data = $stock->SHIndexComponentStocks();
 
 var_dump($data);
 
