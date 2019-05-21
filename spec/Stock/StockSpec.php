@@ -121,4 +121,42 @@ class StockSpec extends ObjectBehavior
     {
         $this->realTimeStock(['sz002142', 'sh601001', 'sh601003'])->shouldBeArray();
     }
+
+    public function it_fetch_main_financial_indicator()
+    {
+        $this->mainFinancialIndicators('002142')->shouldBeArray();
+    }
+    public function it_return_main_financial_indicator_iter()
+    {
+        $this->mainFinancialIndicatorsIter('002142')->shouldHaveType(\Generator::class);
+    }
+
+    public function it_fetch_profitability()
+    {
+        $this->profitability('002142')->shouldBeArray();
+    }
+
+    public function it_return_profitability_iter()
+    {
+        $this->profitabilityIter('002142')->shouldHaveType(\Generator::class);
+    }
+
+    public function it_fetch_solvency()
+    {
+        $this->solvency('002142')->shouldBeArray();
+    }
+    public function it_return_solvency_iter()
+    {
+        $this->solvencyIter('002142')->shouldHaveType(\Generator::class);
+    }
+
+    public function it_fetch_growth_ability()
+    {
+        $this->growthAbility('002142')->shouldBeArray();
+    }
+
+    public function it_return_growth_ability_iter()
+    {
+        $this->growthAbilityIter('002142')->shouldHaveType(\Generator::class);
+    }
 }

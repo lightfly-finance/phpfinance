@@ -12,6 +12,7 @@ class Stock
 {
     use HSTongTradeTrait;
     use StockIndexTrait;
+    use StockIndicatorTrait;
     /**
      * @var HttpClientInterface
      */
