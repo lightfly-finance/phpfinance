@@ -164,4 +164,9 @@ class StockSpec extends ObjectBehavior
     {
         $this->longHuBang('2019-05-20', '2019-05-21')->shouldBeArray();
     }
+
+    public function it_fetch_hshk_realtime_trade()
+    {
+        $this->HSHKRealTimeTrade()->shouldBeArray();
+    }
 }
