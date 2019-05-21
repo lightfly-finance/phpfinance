@@ -159,4 +159,9 @@ class StockSpec extends ObjectBehavior
     {
         $this->growthAbilityIter('002142')->shouldHaveType(\Generator::class);
     }
+
+    public function it_fetch_long_hu_bang()
+    {
+        $this->longHuBang('2019-05-20', '2019-05-21')->shouldBeArray();
+    }
 }
