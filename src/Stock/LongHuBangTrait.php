@@ -18,6 +18,7 @@ trait LongHuBangTrait
      */
     public function longHuBang(string $startTime, string $endTime)
     {
+        // todo： 有分页，添加分页
         $queryString = http_build_query([
             'page' => 0,
             'sort' => 'TDATE',

@@ -24,4 +24,9 @@ class FundSpec extends ObjectBehavior
     {
         $this->get('000001', '2019-05-01', '2019-05-16')->shouldBeArray();
     }
+
+    public function it_fetch_internet_banking()
+    {
+        $this->internetBanking()->shouldBeArray();
+    }
 }

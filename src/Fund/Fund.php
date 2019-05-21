@@ -12,6 +12,8 @@ class Fund
 
     const API = 'http://stock.finance.sina.com.cn/fundInfo/api/openapi.php/CaihuiFundInfoService.getNav';
 
+    const INTERNET_BANKING_API = 'http://quotes.money.163.com/fn/service/internetBanking.php';
+
     /**
      * @var HttpClient
      */
@@ -82,6 +84,30 @@ class Fund
             }
 
         }
+    }
+
+    /**
+     * 互联网理财产品
+     * 数据源： http://quotes.money.163.com/old/#query=hlwlc
+     */
+    public function internetBanking()
+    {
+        $queryString = http_build_query([
+            'sort' => 'CUR4',
+            'order' => 'asc',
+            'type' => 'FG',
+            'count' => 50,
+        ]);
+
+        $queryString .= '&fields=NO,LI_CAI_MING_CHENG,FA_SHOU_SHANG,SYMBOL,SNAME,CUR4,CUR4_CHANGE,CURNAV_001,CURNAV_010,CURNAV_011,OFPROFILE8,PUBLISHDATE';
+
+        $url = self::INTERNET_BANKING_API.'?'.$queryString;
+
+        $res = $this->httpClient->get($url);
+
+        $data = json_decode($res, true);
+
+        return $data['list'];
     }
 
 }
