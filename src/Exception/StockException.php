@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Monster\Finance\Exception;
+namespace Lightfly\Finance\Exception;
 
 
 use Exception;

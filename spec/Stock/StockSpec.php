@@ -1,9 +1,9 @@
 <?php
 
-namespace spec\Monster\Finance\Stock;
+namespace spec\Lightfly\Finance\Stock;
 
-use Monster\Finance\HttpClient;
-use Monster\Finance\Stock\Stock;
+use Lightfly\Finance\HttpClient;
+use Lightfly\Finance\Stock\Stock;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 

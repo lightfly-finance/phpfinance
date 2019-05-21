@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Monster\Finance\Stock;
+namespace Lightfly\Finance\Stock;
 
 
 trait LongHuBangTrait

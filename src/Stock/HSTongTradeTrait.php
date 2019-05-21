@@ -1,9 +1,9 @@
 <?php
 
-namespace Monster\Finance\Stock;
+namespace Lightfly\Finance\Stock;
 
 
-use Monster\Finance\Exception\HSTongException;
+use Lightfly\Finance\Exception\HSTongException;
 
 /**
  * 沪深港股通数据

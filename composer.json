@@ -1,5 +1,5 @@
 {
-    "name": "weinan/finance",
+    "name": "lightfly/finance",
     "require": {
         "guzzlehttp/guzzle": "^6.3",
         "ext-json": "*",
@@ -13,7 +13,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Monster\\Finance\\": "src/"
+            "Lightfly\\Finance\\": "src/"
         }
     },
     "scripts": {

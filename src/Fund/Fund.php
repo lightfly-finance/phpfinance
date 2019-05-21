@@ -1,11 +1,11 @@
 <?php
-namespace Monster\Finance\Fund;
+namespace Lightfly\Finance\Fund;
 
 
 use Generator;
 use function iter\toArray;
-use Monster\Finance\HttpClient;
 use function iter\map;
+use Lightfly\Finance\HttpClient;
 
 class Fund
 {

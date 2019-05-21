@@ -1,12 +1,12 @@
 <?php
-namespace Monster\Finance\Stock;
+namespace Lightfly\Finance\Stock;
 
 
 use Generator;
 use function iter\map;
 use function iter\toArray;
-use Monster\Finance\Exception\StockException;
-use Monster\Finance\HttpClientInterface;
+use Lightfly\Finance\Exception\StockException;
+use Lightfly\Finance\HttpClientInterface;
 
 class Stock
 {
