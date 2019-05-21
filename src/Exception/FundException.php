@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Monster\Finance\Fund;
+namespace Monster\Finance\Exception;
 
 
 use Exception;

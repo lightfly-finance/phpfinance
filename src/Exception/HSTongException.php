@@ -1,6 +1,6 @@
 <?php
 
-namespace Monster\Finance\Stock;
+namespace Monster\Finance\Exception;
 
 use Exception;
 

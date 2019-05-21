@@ -3,6 +3,8 @@
 namespace Monster\Finance\Stock;
 
 
+use Monster\Finance\Exception\HSTongException;
+
 /**
  * 沪深港股通数据
  * Trait HSTongTradeTrait
