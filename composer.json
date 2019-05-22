@@ -19,7 +19,7 @@
     "scripts": {
         "test": "phpspec run"
     },
-    "license": "MIT",
+    "license": "GPL-3.0",
     "authors": [
         {
             "name": "twn39",
