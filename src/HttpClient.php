@@ -12,7 +12,7 @@ class HttpClient implements HttpClientInterface
 
     public function __construct(Client $client)
     {
-        $this->httpClient = new $client;
+        $this->httpClient = $client;
     }
 
     public function get($url, $options = [])
