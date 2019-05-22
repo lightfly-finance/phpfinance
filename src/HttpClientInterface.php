@@ -1,6 +1,6 @@
 <?php
 
-namespace LightFly\Finance;
+namespace Lightfly\Finance;
 
 interface HttpClientInterface {
 

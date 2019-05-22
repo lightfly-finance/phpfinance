@@ -5,7 +5,7 @@ namespace Lightfly\Finance\Fund;
 use Generator;
 use function iter\toArray;
 use function iter\map;
-use Lightfly\Finance\HttpClient;
+use Lightfly\Finance\HttpClientInterface;
 
 class Fund
 {
@@ -21,9 +21,9 @@ class Fund
 
     /**
      * Fund constructor.
-     * @param HttpClient $httpClient
+     * @param HttpClientInterface $httpClient
      */
-    public function __construct(HttpClient $httpClient)
+    public function __construct(HttpClientInterface $httpClient)
     {
 
         $this->httpClient = $httpClient;
