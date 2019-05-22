@@ -7,14 +7,10 @@ use Lightfly\Finance\Stock\Stock;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$httpClient = new HttpClient();
+$httpClient = new HttpClient(new Client());
 
-
-//$stock = new Stock($httpClient);
-//$data = $stock->longHuBang('2019-05-19', '2019-05-21');
-
-$fund = new Fund($httpClient);
-$data = $fund->internetBanking();
+$stock = new Stock($httpClient);
+$data = $stock->HSHKRealTimeTrade();
 
 var_dump($data);
 

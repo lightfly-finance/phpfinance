@@ -2,6 +2,7 @@
 
 namespace spec\Lightfly\Finance\Fund;
 
+use GuzzleHttp\Client;
 use Lightfly\Finance\Fund\Fund;
 use Lightfly\Finance\HttpClient;
 use PhpSpec\ObjectBehavior;
@@ -11,7 +12,7 @@ class FundSpec extends ObjectBehavior
 {
     public function let()
     {
-        $client = new HttpClient();
+        $client = new HttpClient(new Client());
         $this->beConstructedWith($client);
     }
 

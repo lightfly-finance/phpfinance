@@ -10,21 +10,14 @@ class HttpClient implements HttpClientInterface
 {
     private $httpClient;
 
-    public function __construct()
+    public function __construct(Client $client)
     {
-        $this->httpClient = new Client();
+        $this->httpClient = new $client;
     }
 
     public function get($url, $options = [])
     {
         $res = $this->httpClient->get($url, $options);
-
-        return $res->getBody()->getContents();
-    }
-
-    public function post($url, $options = [])
-    {
-        $res = $this->httpClient->post($url, $options);
 
         return $res->getBody()->getContents();
     }
