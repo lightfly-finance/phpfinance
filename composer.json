@@ -1,8 +1,12 @@
 {
     "name": "lightfly/finance",
+    "description": "China finance package for php",
+    "keywords": ["finance", "stock", "fund"],
+    "type": "library",
     "require": {
         "ext-json": "*",
-        "nikic/iter": "^1.6"
+        "nikic/iter": "^1.6",
+        "php": "^7.1"
     },
     "require-dev": {
         "guzzlehttp/guzzle": "^6.3",

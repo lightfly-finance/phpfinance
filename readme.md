@@ -1,5 +1,7 @@
 金融数据服务
 
+![GitHub](https://img.shields.io/github/license/twn39/phpfinance.svg?style=flat-square)
+![Packagist Version](https://img.shields.io/packagist/v/lightfly/finance.svg?style=flat-square)
 [![Build Status](https://travis-ci.com/twn39/phpfinance.svg?branch=master)](https://travis-ci.com/twn39/phpfinance)
 [![Maintainability](https://api.codeclimate.com/v1/badges/bc35f8b7c6b61345a2d9/maintainability)](https://codeclimate.com/github/twn39/phpfinance/maintainability)
 
