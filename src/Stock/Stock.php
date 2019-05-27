@@ -96,7 +96,7 @@ class Stock
      * 获取股票每日复权历史数据
      *
      * @param $symbol string 前面有前缀sh或者sz
-     * @param $type
+     * @param $type string  前复权: qfq , 后复权: hfq
      * @return array
      */
     public function history(string $symbol, $type): array
