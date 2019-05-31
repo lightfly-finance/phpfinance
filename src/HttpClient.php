@@ -5,6 +5,7 @@ namespace Lightfly\Finance;
 
 
 use GuzzleHttp\Client;
+use Lightfly\Finance\Exception\HttpException;
 
 class HttpClient implements HttpClientInterface
 {
@@ -18,6 +19,11 @@ class HttpClient implements HttpClientInterface
     public function get($url, $options = [])
     {
         $res = $this->httpClient->get($url, $options);
+
+        $code = $res->getStatusCode();
+        if ($code == 456) {
+            throw new HttpException('Rate limit forbidden.');
+        }
 
         return $res->getBody()->getContents();
     }
