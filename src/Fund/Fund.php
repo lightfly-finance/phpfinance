@@ -114,6 +114,7 @@ class Fund
     }
 
     /**
+     * 基金基本信息
      * @param string $symbol
      * @return array
      */
@@ -135,6 +136,11 @@ class Fund
         });
     }
 
+    /**
+     * 基金重仓持股
+     * @param string $symbol
+     * @return array
+     */
     public function fundStocksHolding(string $symbol)
     {
         $url = self::FUND_INFO_API . "/cgmx_$symbol.html";
