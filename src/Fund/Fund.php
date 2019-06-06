@@ -6,6 +6,7 @@ use Generator;
 use function iter\toArray;
 use function iter\map;
 use Lightfly\Finance\HttpClientInterface;
+use Symfony\Component\DomCrawler\Crawler;
 
 class Fund
 {
@@ -13,6 +14,8 @@ class Fund
     const API = 'http://stock.finance.sina.com.cn/fundInfo/api/openapi.php/CaihuiFundInfoService.getNav';
 
     const INTERNET_BANKING_API = 'http://quotes.money.163.com/fn/service/internetBanking.php';
+
+    const FUND_INFO_API = 'http://quotes.money.163.com/fund';
 
     /**
      * @var HttpClient
@@ -108,6 +111,55 @@ class Fund
         $data = json_decode($res, true);
 
         return $data['list'];
+    }
+
+    /**
+     * @param string $symbol
+     * @return array
+     */
+    public function fundBasicInfo(string $symbol)
+    {
+        $url = self::FUND_INFO_API . "/jjzl_$symbol.html";
+
+        $html = $this->httpClient->get($url);
+
+        $crawler = new Crawler($html);
+        return $crawler->filter('.fn_cm_table tr')->each(function (Crawler $node, $i) {
+
+            $label = $node->filter('th')->text();
+            $value = $node->filter('td')->text();
+
+            return [
+                $label => $value,
+            ];
+        });
+    }
+
+    public function fundStocksHolding(string $symbol)
+    {
+        $url = self::FUND_INFO_API . "/cgmx_$symbol.html";
+
+        $html = $this->httpClient->get($url);
+
+        $crawler = new Crawler($html);
+
+        $header = ["股票名称", "持有量（股）", "市值（元）", "占净值比"];
+
+        $data = $crawler->filter('.fn_fund_rank')
+                        ->first()
+                        ->filter('tbody tr')
+                        ->each(function (Crawler $node, $i) {
+
+            $row = $node->filter('td')->each(function (Crawler $node, $j) {
+                return $node->text();
+            });
+
+            return $row;
+        });
+
+        array_unshift($data, $header);
+
+        return $data;
     }
 
 }
