@@ -115,10 +115,11 @@ class Fund
 
     /**
      * 基金基本信息
+     * 数据源： http://quotes.money.163.com/fund/jjzl_150199.html
      * @param string $symbol
      * @return array
      */
-    public function fundBasicInfo(string $symbol)
+    public function basicInfo(string $symbol)
     {
         $url = self::FUND_INFO_API . "/jjzl_$symbol.html";
 
@@ -138,10 +139,11 @@ class Fund
 
     /**
      * 基金重仓持股
+     * 数据源：http://quotes.money.163.com/fund/cgmx_150199.html
      * @param string $symbol
      * @return array
      */
-    public function fundStocksHolding(string $symbol)
+    public function stocksHolding(string $symbol)
     {
         $url = self::FUND_INFO_API . "/cgmx_$symbol.html";
 

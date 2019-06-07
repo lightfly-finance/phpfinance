@@ -30,4 +30,14 @@ class FundSpec extends ObjectBehavior
     {
         $this->internetBanking()->shouldBeArray();
     }
+
+    public function it_fetch_fund_basic_info()
+    {
+        $this->basicInfo('150199')->shouldBeArray();
+    }
+
+    public function it_fetch_fund_stocks_holding()
+    {
+        $this->stocksHolding('150199')->shouldBeArray();
+    }
 }
