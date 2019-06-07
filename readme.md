@@ -1,6 +1,6 @@
 金融数据服务
 
-![GitHub](https://img.shields.io/github/license/twn39/phpfinance.svg?style=flat-square)
+[![GitHub](https://img.shields.io/github/license/twn39/phpfinance.svg?style=flat-square)](https://github.com/lightfly-finance/phpfinance/blob/master/LICENSE)
 [![Packagist Version](https://img.shields.io/packagist/v/lightfly/finance.svg?style=flat-square)](https://packagist.org/packages/lightfly/finance)
 [![Build Status](https://travis-ci.com/lightfly-finance/phpfinance.svg?branch=master)](https://travis-ci.com/lightfly-finance/phpfinance)
 
