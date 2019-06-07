@@ -29,7 +29,7 @@ class Stock
 
     static $REALTIME_API = 'http://hq.sinajs.cn/list';
 
-    static $BOARD_API = 'http://hq.stock.sohu.com/pl/pl-1.html';
+    static $BOARD_API = 'http://hq.stock.sohu.com/pl';
 
     /**
      * Stock constructor.
@@ -270,7 +270,9 @@ class Stock
      */
     public function board()
     {
-        $data = $this->httpClient->get(self::$BOARD_API);
+
+        $url = self::$BOARD_API.'/pl-1.html';
+        $data = $this->httpClient->get($url);
 
         $data = mb_convert_encoding($data, 'UTF-8', 'GBK');
 
@@ -290,7 +292,10 @@ class Stock
             }, $params));
         }, $result[1]);
 
-        $header = ["代码", "板块", "公司家数", "平均价格", "平均涨跌额", "平均涨跌幅", "总手", "总成交额", "领涨股", "当前价", "涨跌额", "涨跌幅"];
+        $header = [
+            "代码", "板块", "公司家数", "平均价格", "平均涨跌额", "平均涨跌幅", "总手",
+            "总成交额", "领涨股", "当前价", "涨跌额", "涨跌幅",
+        ];
 
         $result = toArray($data);
 
@@ -303,8 +308,43 @@ class Stock
      * 板块成分股
      * 数据源：http://q.stock.sohu.com/cn/bk_4304.shtml
      */
-    public function boardStocks()
+    public function boardStocks($code)
     {
+        $url = self::$BOARD_API."/$code-1.html";
 
+        $data = $this->httpClient->get($url);
+
+        $data = mb_convert_encoding($data, 'UTF-8', 'GBK');
+
+        $pattern = "/ODIA\(\[(.+)\]\)/";
+
+        preg_match($pattern, $data, $matches);
+
+        $pattern = "/\[([^]]+)\]/";
+
+        preg_match_all($pattern, $matches[1], $result);
+
+        $data = $result[1];
+        array_shift($data);
+
+        $result = map(function ($item) {
+
+            $params = explode(',', $item);
+
+            return toArray(map(function($param) {
+                return trim($param, "'");
+            }, $params));
+
+        }, $data);
+
+        $header = [
+            "股票代码", "股票名称", "当前价", "涨跌额", "涨跌幅", "现手", "总手",
+            "成交金额", "换手率", "今低", "今高", "今开盘", "昨收盘",
+        ];
+
+        $data = toArray($result);
+        array_unshift($data, $header);
+
+        return $data;
     }
 }
