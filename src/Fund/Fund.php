@@ -102,7 +102,7 @@ class Fund
             'count' => 50,
         ]);
 
-        $queryString .= '&fields=NO,LI_CAI_MING_CHENG,FA_SHOU_SHANG,SYMBOL,SNAME,CUR4,CUR4_CHANGE,CURNAV_001,CURNAV_010,CURNAV_011,OFPROFILE8,PUBLISHDATE';
+        $queryString .= '&fields=NO,LI_CAI_MING_CHENG,FA_SHOU_SHANG,SYMBOL,SNAME,CUR4,CURNAV_001,CURNAV_010,CURNAV_011,OFPROFILE8,PUBLISHDATE';
 
         $url = self::INTERNET_BANKING_API.'?'.$queryString;
 
@@ -110,7 +110,24 @@ class Fund
 
         $data = json_decode($res, true);
 
-        return $data['list'];
+        $result = map(function ($item) {
+
+            return [
+                '理财名称' => $item['LI_CAI_MING_CHENG'],
+                '发售商' => $item['FA_SHOU_SHANG'],
+                '代码' => $item['SYMBOL'],
+                '序号' => $item['NO'],
+                '基金名称' => $item['SNAME'],
+                '万份收益' => $item['CUR4'],
+                '七日年化收益率' => $item['CURNAV_001'],
+                '三月收益率' => $item['CURNAV_010'],
+                '半年收益率' => $item['CURNAV_011'],
+                '发布日期' => $item['PUBLISHDATE'],
+                '成立日期' => $item['OFPROFILE8'],
+            ];
+        }, $data['list']);
+
+        return toArray($result);
     }
 
     /**
