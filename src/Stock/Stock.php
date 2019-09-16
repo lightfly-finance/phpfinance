@@ -14,6 +14,7 @@ class Stock
     use StockIndexTrait;
     use StockIndicatorTrait;
     use LongHuBangTrait;
+    use RankTrait;
     /**
      * @var HttpClientInterface
      */
