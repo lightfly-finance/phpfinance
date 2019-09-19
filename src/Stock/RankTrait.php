@@ -105,7 +105,7 @@ trait RankTrait
     {
         $page = 1;
         while (true) {
-            $HTML = $this->httpClient->get(self::$ROERANK_URL.'?p='.$page.'&order=navps|2&num='.$perPage);
+            $HTML = $this->httpClient->get(self::$ROERANK_URL.'?p='.$page.'&order=code|2&num='.$perPage);
 
             $crawler = new Crawler($HTML);
             $table = $crawler->filter('#dataTable tr')->each(function (Crawler $node) {
