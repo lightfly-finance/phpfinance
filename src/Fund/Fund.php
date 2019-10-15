@@ -17,6 +17,8 @@ class Fund
 
     const FUND_INFO_API = 'http://quotes.money.163.com/fund';
 
+    const FUND_ALL = 'http://vip.stock.finance.sina.com.cn/fund_center/data/jsonp.php';
+
     /**
      * @var HttpClient
      */
@@ -185,6 +187,50 @@ class Fund
         array_unshift($data, $header);
 
         return $data;
+    }
+
+    /**
+     * 数据：http://vip.stock.finance.sina.com.cn/fund_center/index.html#jzkfall
+     * @param $page
+     * @param int $limit
+     * @return array
+     */
+    public function all($page = 1, $limit = 80)
+    {
+        $params = [
+            'page' => $page,
+            'num' => $limit,
+            'sort' => 'nav_date',
+            'asc' => 0,
+        ];
+
+        $qs = http_build_query($params);
+
+        $random = mt_rand(100000, 999999);
+        $url = self::FUND_ALL."/IO.XSRV2.CallbackList['$random']/NetValue_Service.getNetValueOpen?".$qs;
+        $res = $this->httpClient->get($url);
+        $data = mb_convert_encoding($res, 'UTF-8', 'GB2312');
+
+        $pattern = '/data:\[(.+)\]/';
+        $match = preg_match($pattern, $data, $matches);
+
+        $result = $matches[1];
+        $pattern = '/\{([^{}]+)\}/';
+        preg_match_all($pattern, $result, $matches);
+        $data = $matches[1];
+
+        $pageData = [];
+        foreach ($data as $item) {
+            $row = explode(',', $item);
+            $rowData = [];
+            foreach ($row as $kv) {
+                list($k, $v) = explode(':', $kv);
+                $rowData[$k] = trim($v, '"');
+            }
+            $pageData[] = $rowData;
+        }
+
+        return $pageData;
     }
 
 }
