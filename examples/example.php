@@ -10,8 +10,9 @@ require __DIR__ . '/../vendor/autoload.php';
 
 $httpClient = new HttpClient(new Client());
 
-$fixer = new Fixer($httpClient, '29c96e229e98942d24888c0b5c8e9050');
+$fixer = new Fixer($httpClient, 'secret key');
 $data = $fixer->all();
+var_dump($data);
 
 
 
