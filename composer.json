@@ -6,15 +6,15 @@
     "require": {
         "php": "^7.1",
         "ext-json": "*",
-        "nikic/iter": "^1.6",
-        "symfony/dom-crawler": "^4.4",
+        "nikic/iter": "^2.0",
+        "symfony/dom-crawler": "^5.0",
         "masterminds/html5": "^2.6",
-        "symfony/css-selector": "^4.4",
+        "symfony/css-selector": "^5.0",
         "ext-openssl": "*"
     },
     "require-dev": {
         "guzzlehttp/guzzle": "^6.3",
-        "phpspec/phpspec": "^5.1"
+        "phpspec/phpspec": "^6.1"
     },
     "config": {
         "bin-dir": "bin"
