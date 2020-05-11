@@ -5,6 +5,7 @@ namespace Lightfly\Finance;
 
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use Lightfly\Finance\Exception\HttpException;
 
 class HttpClient implements HttpClientInterface
@@ -28,13 +29,18 @@ class HttpClient implements HttpClientInterface
      */
     public function get($url, $options = [])
     {
-        $res = $this->httpClient->get($url, $options);
+        $options['headers'] = [
+            'User-Agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:76.0) Gecko/20100101 Firefox/76.0',
+        ];
+        try {
+            $res = $this->httpClient->get($url, $options);
+            return $res->getBody()->getContents();
 
-        $code = $res->getStatusCode();
-        if ($code == 456) {
-            throw new HttpException('Rate limit forbidden.');
+        } catch (ClientException $error) {
+            $code = $error->getCode();
+            if ($code == 456) {
+                throw new HttpException('The Client is blocked by sina.');
+            }
         }
-
-        return $res->getBody()->getContents();
     }
 }
