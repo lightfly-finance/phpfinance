@@ -10,7 +10,8 @@
         "symfony/dom-crawler": "^5.0",
         "masterminds/html5": "^2.6",
         "symfony/css-selector": "^5.0",
-        "ext-openssl": "*"
+        "ext-openssl": "*",
+        "phpoffice/phpspreadsheet": "^1.12"
     },
     "require-dev": {
         "guzzlehttp/guzzle": "^6.3",

@@ -3,6 +3,7 @@ namespace Lightfly\Finance\Stock;
 
 
 use Generator;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 use function iter\map;
 use function iter\toArray;
 use Lightfly\Finance\Exception\StockException;
@@ -347,5 +348,49 @@ class Stock
         array_unshift($data, $header);
 
         return $data;
+    }
+
+    /**
+     * 沪深A股
+     * 数据来源： http://stockapp.finance.qq.com/mstats/?pgv_ref=fi_quote_navi_bar#mod=list&id=ssa&module=SS&type=ranka
+     * @param string $tmpDir
+     * @return array
+     * @throws \Exception
+     */
+    public function HSTotal($tmpDir = '.') {
+        $updateDate = '';
+        $data = [];
+        foreach ($this->HSTotalGenerator($tmpDir) as $key => $row) {
+            if ($key === 0) {
+                $updateDate = date('Y-').$row[1];
+            }
+            if ($key >= 2 ) {
+                $data[] = $row;
+            }
+        }
+
+        return [
+            'datetime' => new \DateTime($updateDate),
+            'data' => $data,
+        ];
+    }
+
+    public function HSTotalGenerator($tmpDir) {
+        $url = 'http://stock.gtimg.cn/data/get_hs_xls.php?id=ranka&type=1&metric=chr';
+        $data = $this->httpClient->get($url);
+        file_put_contents($tmpDir.'/tmp.xls', $data);
+        $reader = IOFactory::createReader('Xls');
+        $reader->setReadDataOnly(True);
+        $spreadsheet = $reader->load($tmpDir . "/tmp.xls");
+        $worksheet = $spreadsheet->getActiveSheet();
+        foreach ($worksheet->getRowIterator() as $row) {
+            $cellIter = $row->getCellIterator();
+            $cellIter->setIterateOnlyExistingCells(False);
+            $rowRet = [];
+            foreach ($cellIter as $cell) {
+                $rowRet[] = $cell->getValue();
+            }
+            yield $rowRet;
+        }
     }
 }
