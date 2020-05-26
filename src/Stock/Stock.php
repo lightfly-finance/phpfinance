@@ -127,7 +127,7 @@ class Stock
     /**
      * 数据源： http://vip.stock.finance.sina.com.cn/mkt/#hs300
      * 沪深300成分股
-     *
+     * @deprecated
      * @return array
      */
     public function HS300(): array
@@ -137,7 +137,7 @@ class Stock
 
     /**
      * 获取沪深300分页数据
-     *
+     * @deprecated
      * @return Generator
      */
     public function getHS300Page()

@@ -23,7 +23,7 @@ trait StockIndexTrait
     /**
      * 大盘指数数据
      * 数据源：http://vip.stock.finance.sina.com.cn/mkt/#dpzs
-     *
+     * @deprecated
      * @return array
      */
     public function stockIndex(): array
@@ -68,6 +68,7 @@ trait StockIndexTrait
     /**
      * 上证指数成分股
      * 数据源： http://vip.stock.finance.sina.com.cn/mkt/#zhishu_000001
+     * @deprecated
      */
     public function SHIndexComponentStocks()
     {
@@ -87,6 +88,7 @@ trait StockIndexTrait
 
     /**
      * 上证50指数成分股
+     * @deprecated
      */
     public function SH50IndexComponentStocks()
     {
@@ -96,6 +98,7 @@ trait StockIndexTrait
 
     /**
      * 上证消费指数成分股
+     * @deprecated
      */
     public function SHConsumptionIndexComponentStocks()
     {
@@ -105,6 +108,7 @@ trait StockIndexTrait
 
     /**
      * 上证医药指数成分股
+     * @deprecated
      */
     public function SHMedicineIndexComponentStocks()
     {
@@ -114,6 +118,7 @@ trait StockIndexTrait
 
     /**
      * 深证成指成分股
+     * @deprecated
      */
     public function SZIndexComponentStocks()
     {
@@ -131,6 +136,7 @@ trait StockIndexTrait
     }
     /**
      * 深证综指成分股
+     * @deprecated
      * @return array
      */
     public function SZCompositeIndexComponentStocks()
@@ -151,6 +157,7 @@ trait StockIndexTrait
 
     /**
      * 中证500指数成分股
+     * @deprecated
      */
     public function ZZ500IndexComponentStocks()
     {
@@ -170,6 +177,7 @@ trait StockIndexTrait
     /**
      * 上证指数成分股分页数据
      * @param $symbol
+     * @deprecated
      * @return Generator
      */
     private function getComponentStocksPage($symbol)
