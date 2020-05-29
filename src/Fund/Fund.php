@@ -2,7 +2,10 @@
 namespace Lightfly\Finance\Fund;
 
 
+use DateTime;
 use Generator;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Reader\Exception;
 use function iter\toArray;
 use function iter\map;
 use Lightfly\Finance\HttpClientInterface;
@@ -231,6 +234,68 @@ class Fund
         }
 
         return $pageData;
+    }
+
+    /**
+     * url: http://stock.gtimg.cn/data/get_hs_xls.php?id=rankfund&type=1&metric=chr
+     * ETF 或者 LOF 上市交易的基金
+     * @param string $tmpDir
+     * @return array
+     * @throws \Exception
+     */
+    public function stockFund($tmpDir = '.')
+    {
+        $updateDate = '';
+        $data = [];
+        foreach ($this->totalStockFundGenerator($tmpDir) as $key => $row) {
+            if ($key === 0) {
+                $updateDate = date('Y-').$row[1];
+            }
+            if ($key >= 2 ) {
+                $data[] = $row;
+            }
+        }
+
+        return [
+            'datetime' => new DateTime($updateDate),
+            'data' => $data,
+        ];
+    }
+
+    /**
+     *
+     * @param string $tmpDir
+     * @return Generator
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws Exception
+     */
+    public function totalStockFundGenerator($tmpDir) {
+
+        $query = [
+            'id' => 'rankfund',
+            'type' => 1,
+            'metric' => 'chr',
+        ];
+
+        $uri = 'http://stock.gtimg.cn/data/get_hs_xls.php';
+        $url = $uri .'?'. http_build_query($query);
+
+        $data = $this->httpClient->get($url);
+        file_put_contents($tmpDir . '/tmp_fund.xls', $data);
+
+        $reader = IOFactory::createReader('Xls');
+        $reader->setReadDataOnly(True);
+        $spreadsheet = $reader->load($tmpDir . "/tmp_fund.xls");
+        $worksheet = $spreadsheet->getActiveSheet();
+        foreach ($worksheet->getRowIterator() as $row) {
+            $cellIter = $row->getCellIterator();
+            $cellIter->setIterateOnlyExistingCells(False);
+            $rowRet = [];
+            foreach ($cellIter as $cell) {
+                $rowRet[] = $cell->getValue();
+            }
+            yield $rowRet;
+        }
     }
 
 }
