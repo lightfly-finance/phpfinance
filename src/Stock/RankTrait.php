@@ -54,23 +54,15 @@ trait RankTrait
             $url = self::$PERANK_URL."/IO.XSRV2.CallbackList['$randStr']/Market_Center.getHQNodeDataNew?".http_build_query($params);
             $res = $this->httpClient->get($url);
             $data = mb_convert_encoding($res, 'UTF-8', 'GBK');
-            $pattern = "/{([^{}]+)}/";
+            $pattern = '/\]\((.*)\);/';
             $match = preg_match_all($pattern, $data, $matches);
             if (!$match) {
                 break;
             }
 
-            foreach ($matches[1] as $row) {
-                $item = explode(',', $row);
-
-                $result = [];
-
-                foreach ($item as $kv) {
-                    list($key, $value) = explode(':', $kv);
-                    $result[$key] = trim($value, '"');
-                }
-
-                yield $result;
+            $result = json_decode($matches[1][0], true);
+            foreach ($result as $row) {
+                yield $row;
             }
 
             $page += 1;
