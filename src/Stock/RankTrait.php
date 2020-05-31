@@ -61,11 +61,11 @@ trait RankTrait
             }
 
             $rxt = $matches[1][0];
-            if (empty($rxt) || $rxt == 'null') {
-                break;
-            }
 
             $result = json_decode($rxt, true);
+            if (!is_array($result)) {
+                break;
+            }
             foreach ($result as $row) {
                 yield $row;
             }
