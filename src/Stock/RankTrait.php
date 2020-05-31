@@ -60,7 +60,12 @@ trait RankTrait
                 break;
             }
 
-            $result = json_decode($matches[1][0], true);
+            $rxt = $matches[1][0];
+            if (empty($rxt) || $rxt == 'null') {
+                break;
+            }
+
+            $result = json_decode($rxt, true);
             foreach ($result as $row) {
                 yield $row;
             }
