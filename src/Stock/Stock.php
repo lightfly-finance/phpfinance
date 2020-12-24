@@ -2,8 +2,10 @@
 namespace Lightfly\Finance\Stock;
 
 
+use DateTime;
 use Generator;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Reader\Exception;
 use function iter\map;
 use function iter\toArray;
 use Lightfly\Finance\Exception\StockException;
@@ -79,7 +81,7 @@ class Stock
      * @param $url
      * @return Generator
      */
-    private function dailyKData(string $url)
+    private function dailyKData(string $url): Generator
     {
         $res = $this->httpClient->get($url);
 
@@ -194,7 +196,7 @@ class Stock
      * @param $keyword
      * @return array
      */
-    public function suggest($keyword)
+    public function suggest($keyword): array
     {
         $url = self::$SUGGEST_API.'key='.$keyword;
 
@@ -216,7 +218,7 @@ class Stock
      * @param array $symbols
      * @return array
      */
-    public function realTimeStock(array $symbols)
+    public function realTimeStock(array $symbols): array
     {
         $symbolStr = implode(',', $symbols);
 
@@ -269,10 +271,11 @@ class Stock
     /**
      * 板块
      * 数据源：http://q.stock.sohu.com/cn/bk.shtml
+     *
+     * @return array
      */
-    public function board()
+    public function board(): array
     {
-
         $url = self::$BOARD_API.'/pl-1.html';
         $data = $this->httpClient->get($url);
 
@@ -310,7 +313,7 @@ class Stock
      * 板块成分股
      * 数据源：http://q.stock.sohu.com/cn/bk_4304.shtml
      */
-    public function boardStocks($code)
+    public function boardStocks($code): array
     {
         $url = self::$BOARD_API."/$code-1.html";
 
@@ -357,7 +360,7 @@ class Stock
      * @return array
      * @throws \Exception
      */
-    public function HSTotal($tmpDir = '.') {
+    public function HSTotal($tmpDir = '.'): array {
         $updateDate = '';
         $data = [];
         foreach ($this->HSTotalGenerator($tmpDir) as $key => $row) {
@@ -370,12 +373,17 @@ class Stock
         }
 
         return [
-            'datetime' => new \DateTime($updateDate),
+            'datetime' => new DateTime($updateDate),
             'data' => $data,
         ];
     }
 
-    public function HSTotalGenerator($tmpDir) {
+    /**
+     * @param $tmpDir
+     * @return Generator
+     * @throws Exception
+     */
+    public function HSTotalGenerator($tmpDir): Generator {
         $url = 'http://stock.gtimg.cn/data/get_hs_xls.php?id=ranka&type=1&metric=chr';
         $data = $this->httpClient->get($url);
         file_put_contents($tmpDir.'/tmp.xls', $data);

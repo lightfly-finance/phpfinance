@@ -115,4 +115,22 @@ class StockSpec extends ObjectBehavior
     {
         $this->HSHKRealTimeTrade()->shouldBeArray();
     }
+
+    public function it_fetch_hs_total_stock()
+    {
+        $this->HSTotal('/tmp')->shouldBeArray();
+    }
+
+    public function it_fetch_all_board()
+    {
+        $this->board()->shouldBeArray();
+    }
+
+    public function it_fetch_PE_rank() {
+        $this->PERank()->shouldBeArray();
+    }
+
+    public function it_fetch_ROE_rank() {
+        $this->ROERank()->shouldBeArray();
+    }
 }

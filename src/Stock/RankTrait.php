@@ -2,6 +2,7 @@
 
 namespace Lightfly\Finance\Stock;
 
+use Generator;
 use Symfony\Component\DomCrawler\Crawler;
 use function iter\toArray;
 
@@ -21,25 +22,25 @@ trait RankTrait
      * @param int $perPage
      * @return array
      */
-    public function PERank($perPage = 400)
+    public function PERank($perPage = 400): array
     {
         return toArray($this->generatePERank($perPage));
     }
 
     /**
      * @param int $perPage
-     * @return \Generator
+     * @return Generator
      */
-    public function PERankIter($perPage = 400)
+    public function PERankIter($perPage = 400): Generator
     {
         return $this->generatePERank($perPage);
     }
 
     /**
      * @param int $perPage
-     * @return \Generator
+     * @return Generator
      */
-    private function generatePERank($perPage = 400)
+    private function generatePERank($perPage = 400): Generator
     {
         $page = 1;
         while (true) {
@@ -80,25 +81,25 @@ trait RankTrait
      * @param int $perPage
      * @return array
      */
-    public function ROERank($perPage = 300)
+    public function ROERank($perPage = 300): array
     {
         return toArray($this->generateROE($perPage));
     }
 
     /**
      * @param int $perPage
-     * @return \Generator
+     * @return Generator
      */
-    public function ROERankIter($perPage = 300)
+    public function ROERankIter($perPage = 300): Generator
     {
         return $this->generateROE($perPage);
     }
 
     /**
      * @param $perPage
-     * @return \Generator
+     * @return Generator
      */
-    private function generateROE($perPage)
+    private function generateROE($perPage): Generator
     {
         $page = 1;
         while (true) {
