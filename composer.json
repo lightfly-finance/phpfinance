@@ -11,6 +11,9 @@
         "masterminds/html5": "^2.7",
         "symfony/css-selector": "^5.1",
         "ext-openssl": "*",
+        "sebastian/comparator": "3.0.*",
+        "sebastian/diff": "3.0.*",
+        "sebastian/exporter": "3.0.*",
         "phpoffice/phpspreadsheet": "^1.12"
     },
     "require-dev": {
