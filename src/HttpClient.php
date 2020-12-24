@@ -27,7 +27,7 @@ class HttpClient implements HttpClientInterface
      * @return string
      * @throws HttpException
      */
-    public function get($url, $options = [])
+    public function get($url, $options = []): string
     {
         $options['headers'] = [
             'User-Agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:76.0) Gecko/20100101 Firefox/76.0',

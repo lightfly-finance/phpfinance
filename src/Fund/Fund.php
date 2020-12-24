@@ -45,7 +45,7 @@ class Fund
      * @param $dateTo
      * @return array
      */
-    public function get($symbol, $dateFrom, $dateTo)
+    public function get($symbol, $dateFrom, $dateTo): array
     {
         $queryString = http_build_query([
             'symbol' => $symbol,
@@ -74,7 +74,7 @@ class Fund
      * @param $url
      * @return Generator
      */
-    private function getFundPage($url)
+    private function getFundPage($url): Generator
     {
         $page = 1;
         while (true) {
@@ -98,7 +98,7 @@ class Fund
      * 互联网理财产品
      * 数据源： http://quotes.money.163.com/old/#query=hlwlc
      */
-    public function internetBanking()
+    public function internetBanking(): array
     {
         $queryString = http_build_query([
             'sort' => 'CUR4',
@@ -141,7 +141,7 @@ class Fund
      * @param string $symbol
      * @return array
      */
-    public function basicInfo(string $symbol)
+    public function basicInfo(string $symbol): array
     {
         $url = self::FUND_INFO_API . "/jjzl_$symbol.html";
 
@@ -165,7 +165,7 @@ class Fund
      * @param string $symbol
      * @return array
      */
-    public function stocksHolding(string $symbol)
+    public function stocksHolding(string $symbol): array
     {
         $url = self::FUND_INFO_API . "/cgmx_$symbol.html";
 
@@ -198,7 +198,7 @@ class Fund
      * @param int $limit
      * @return array
      */
-    public function all($page = 1, $limit = 80)
+    public function all($page = 1, $limit = 80): array
     {
         $params = [
             'page' => $page,
@@ -243,7 +243,7 @@ class Fund
      * @return array
      * @throws \Exception
      */
-    public function stockFund($tmpDir = '.')
+    public function stockFund($tmpDir = '.'): array
     {
         $updateDate = '';
         $data = [];
@@ -269,7 +269,8 @@ class Fund
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      * @throws Exception
      */
-    public function totalStockFundGenerator($tmpDir) {
+    public function totalStockFundGenerator(string $tmpDir): Generator
+    {
 
         $query = [
             'id' => 'rankfund',

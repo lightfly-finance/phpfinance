@@ -32,7 +32,7 @@ class CURLHttpProxyClient implements HttpClientInterface
      * @return string
      * @throws HttpException
      */
-    public function get($url, $options = [])
+    public function get($url, $options = []): string
     {
         $options['proxy'] = [
             'http' => $this->httpProxy,

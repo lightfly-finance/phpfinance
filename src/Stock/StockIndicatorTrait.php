@@ -18,7 +18,7 @@ trait StockIndicatorTrait
      * @param $symbol  string 不带前缀sh or sz
      * @return array
      */
-    public function mainFinancialIndicators($symbol)
+    public function mainFinancialIndicators(string $symbol): array
     {
         return toArray($this->getIndicators($symbol));
     }
@@ -27,7 +27,7 @@ trait StockIndicatorTrait
      * @param $symbol
      * @return Generator
      */
-    public function mainFinancialIndicatorsIter($symbol)
+    public function mainFinancialIndicatorsIter($symbol): Generator
     {
         return $this->getIndicators($symbol);
     }
@@ -39,7 +39,7 @@ trait StockIndicatorTrait
      * @param $symbol string
      * @return array
      */
-    public function profitability(string $symbol)
+    public function profitability(string $symbol): array
     {
         return toArray($this->getIndicators($symbol, 'ylnl'));
     }
@@ -48,7 +48,7 @@ trait StockIndicatorTrait
      * @param string $symbol
      * @return Generator
      */
-    public function profitabilityIter(string $symbol)
+    public function profitabilityIter(string $symbol): Generator
     {
         return $this->getIndicators($symbol, 'ylnl');
     }
@@ -59,7 +59,7 @@ trait StockIndicatorTrait
      * @param string $symbol
      * @return array
      */
-    public function solvency(string $symbol)
+    public function solvency(string $symbol): array
     {
         return toArray($this->getIndicators($symbol, 'chnl'));
     }
@@ -68,7 +68,7 @@ trait StockIndicatorTrait
      * @param string $symbol
      * @return Generator
      */
-    public function solvencyIter(string $symbol)
+    public function solvencyIter(string $symbol): Generator
     {
         return $this->getIndicators($symbol, 'chnl');
     }
@@ -79,7 +79,7 @@ trait StockIndicatorTrait
      * @param string $symbol
      * @return array
      */
-    public function growthAbility(string $symbol)
+    public function growthAbility(string $symbol): array
     {
         return toArray($this->getIndicators($symbol, 'cznl'));
     }
@@ -88,7 +88,7 @@ trait StockIndicatorTrait
      * @param string $symbol
      * @return Generator
      */
-    public function growthAbilityIter(string $symbol)
+    public function growthAbilityIter(string $symbol): Generator
     {
         return $this->getIndicators($symbol, 'cznl');
     }
@@ -99,7 +99,7 @@ trait StockIndicatorTrait
      * @param string|null $indicator
      * @return Generator
      */
-    private function getIndicators(string $symbol, string $indicator = null)
+    private function getIndicators(string $symbol, string $indicator = null): Generator
     {
         $segmentPath = '/zycwzb_'.$symbol.'.html?type=report';
         if ($indicator) {
@@ -114,7 +114,7 @@ trait StockIndicatorTrait
      * @param string $data
      * @return Generator
      */
-    private function parseCSV(string $data)
+    private function parseCSV(string $data): Generator
     {
         $data = explode("\r\n", $data);
         foreach ($data as $row) {
