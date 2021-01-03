@@ -4,23 +4,20 @@ namespace Lightfly\Finance\Fund;
 
 use DateTime;
 use Generator;
-use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\Reader\Exception;
-use function iter\toArray;
 use function iter\map;
+use function iter\toArray;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 use Lightfly\Finance\HttpClientInterface;
 use Symfony\Component\DomCrawler\Crawler;
+use PhpOffice\PhpSpreadsheet\Reader\Exception;
 
 class Fund
 {
 
-    const API = 'http://stock.finance.sina.com.cn/fundInfo/api/openapi.php/CaihuiFundInfoService.getNav';
-
-    const INTERNET_BANKING_API = 'http://quotes.money.163.com/fn/service/internetBanking.php';
-
     const FUND_INFO_API = 'http://quotes.money.163.com/fund';
-
     const FUND_ALL = 'http://vip.stock.finance.sina.com.cn/fund_center/data/jsonp.php';
+    const INTERNET_BANKING_API = 'http://quotes.money.163.com/fn/service/internetBanking.php';
+    const API = 'http://stock.finance.sina.com.cn/fundInfo/api/openapi.php/CaihuiFundInfoService.getNav';
 
     /**
      * @var HttpClient
@@ -33,7 +30,6 @@ class Fund
      */
     public function __construct(HttpClientInterface $httpClient)
     {
-
         $this->httpClient = $httpClient;
     }
 
@@ -108,11 +104,8 @@ class Fund
         ]);
 
         $queryString .= '&fields=NO,LI_CAI_MING_CHENG,FA_SHOU_SHANG,SYMBOL,SNAME,CUR4,CURNAV_001,CURNAV_010,CURNAV_011,OFPROFILE8,PUBLISHDATE';
-
         $url = self::INTERNET_BANKING_API.'?'.$queryString;
-
         $res = $this->httpClient->get($url);
-
         $data = json_decode($res, true);
 
         $result = map(function ($item) {
@@ -168,11 +161,8 @@ class Fund
     public function stocksHolding(string $symbol): array
     {
         $url = self::FUND_INFO_API . "/cgmx_$symbol.html";
-
         $html = $this->httpClient->get($url);
-
         $crawler = new Crawler($html);
-
         $header = ["股票名称", "持有量（股）", "市值（元）", "占净值比"];
 
         $data = $crawler->filter('.fn_fund_rank')
@@ -197,43 +187,30 @@ class Fund
      * @param $page
      * @param int $limit
      * @return array
+     * @throws \Exception
      */
     public function all($page = 1, $limit = 80): array
     {
         $params = [
             'page' => $page,
             'num' => $limit,
-            'sort' => 'nav_date',
+            'sort' => 'form_year',
             'asc' => 0,
         ];
 
         $qs = http_build_query($params);
 
         $random = mt_rand(100000, 999999);
-        $url = self::FUND_ALL."/IO.XSRV2.CallbackList['$random']/NetValue_Service.getNetValueOpen?".$qs;
+        $url = self::FUND_ALL."/IO.XSRV2.CallbackList['$random']/NetValueReturn_Service.NetValueReturnOpen?".$qs;
         $res = $this->httpClient->get($url);
-        $data = mb_convert_encoding($res, 'UTF-8', 'GB2312');
 
-        $pattern = '/data:\[(.+)\]/';
-        $match = preg_match($pattern, $data, $matches);
-
-        $result = $matches[1];
-        $pattern = '/\{([^{}]+)\}/';
-        preg_match_all($pattern, $result, $matches);
-        $data = $matches[1];
-
-        $pageData = [];
-        foreach ($data as $item) {
-            $row = explode(',', $item);
-            $rowData = [];
-            foreach ($row as $kv) {
-                list($k, $v) = explode(':', $kv);
-                $rowData[$k] = trim($v, '"');
-            }
-            $pageData[] = $rowData;
+        $pattern = '/\]\((.*)\)/';
+        $match = preg_match($pattern, $res, $matches);
+        if ($match) {
+            return json_decode($matches[1], true);
+        } else {
+            throw new \Exception("data parse error.");
         }
-
-        return $pageData;
     }
 
     /**
