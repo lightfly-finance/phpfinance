@@ -12,7 +12,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: shivammathur/setup-php@v2
+    - uses: actions/checkout@v2
+
+    - name: Setup PHP with specific version of PECL extension
+      uses: shivammathur/setup-php@v2
       with:
         php-version: '7.4'
         extensions: imagick,gd
