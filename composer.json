@@ -9,12 +9,12 @@
         "nikic/iter": "^2.1",
         "symfony/dom-crawler": "^5.1",
         "masterminds/html5": "^2.7",
-        "symfony/css-selector": "^5.1",
+        "symfony/css-selector": "^5.3",
         "ext-openssl": "*",
         "sebastian/comparator": "3.0.*",
         "sebastian/diff": "3.0.*",
         "sebastian/exporter": "^3.1",
-        "phpoffice/phpspreadsheet": "^1.12"
+        "phpoffice/phpspreadsheet": "^1.18"
     },
     "require-dev": {
         "guzzlehttp/guzzle": "^6.3",
