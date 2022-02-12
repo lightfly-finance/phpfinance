@@ -47,8 +47,8 @@ class Stock
     /**
      * 数据源： http://quotes.money.163.com/trade/lsjysj_600004.html?year=2019&season=1
      * @param $symbol string 需要前缀sh or sz
-     * @param $dateFrom
-     * @param $dateTo
+     * @param string $dateFrom
+     * @param string $dateTo
      * @return array
      * @throws StockException
      */
@@ -78,7 +78,7 @@ class Stock
     /**
      * 每日历史数据
      *
-     * @param $url
+     * @param string $url
      * @return Generator
      */
     private function dailyKData(string $url): Generator
@@ -101,11 +101,12 @@ class Stock
     /**
      * 获取股票每日复权历史数据
      *
+     * @deprecated
      * @param $symbol string 前面有前缀sh或者sz
      * @param $type string  前复权: qfq , 后复权: hfq
      * @return array
      */
-    public function history(string $symbol, $type): array
+    public function history(string $symbol, string $type): array
     {
         $res = $this->httpClient->get(self::$STOCK_HISTORY_API."/$symbol/$type.js");
 
@@ -215,6 +216,7 @@ class Stock
 
     /**
      * 最新行情
+     * @deprecated
      * @param array $symbols
      * @return array
      */
@@ -312,8 +314,10 @@ class Stock
     /**
      * 板块成分股
      * 数据源：http://q.stock.sohu.com/cn/bk_4304.shtml
+     * @param string $code
+     * @return array
      */
-    public function boardStocks($code): array
+    public function boardStocks(string $code): array
     {
         $url = self::$BOARD_API."/$code-1.html";
 
@@ -360,7 +364,8 @@ class Stock
      * @return array
      * @throws \Exception
      */
-    public function HSTotal($tmpDir = '.'): array {
+    public function HSTotal(string $tmpDir = '.'): array
+    {
         $updateDate = '';
         $data = [];
         foreach ($this->HSTotalGenerator($tmpDir) as $key => $row) {
